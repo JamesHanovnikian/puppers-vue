@@ -1,18 +1,47 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>{{ message }}</h1>
+
+    <div v-for="puppy in puppies"> 
+      <ul> 
+        <li>   {{ puppy.name }} </li>
+        <li>   {{ puppy.breed}} </li>
+        <li>   {{ puppy.months }} </li>
+
+      <button> Edit Puppy </button>
+      </ul>
+    
+    </div>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<style></style>
 
+<script>
+import axios from "axios";
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+  data: function () {
+    return {
+      message: "Welcome to the Puppies App!",
+      puppies: [],
+    };
+  },
+  created: function () {
+    this.indexPuppies();
+  },
+  methods: {
+    indexPuppies: function () {
+      console.log("in index function");
+      axios.get("http://localhost:3000/puppies").then((response) => {
+        console.log("test");
+        console.log(response.data);
+        this.puppies = response.data;
+      });
+    },
+  },
+};
 </script>
+
+
+
+
